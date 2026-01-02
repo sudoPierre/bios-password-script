@@ -51,9 +51,9 @@ function setPasswordHP {
     & "$scriptPath\HPQPswd.exe" /s /p"$password" /f"$scriptPath\mdp.bin"
     & "$scriptPath\BiosConfigUtility.exe" /npwdfile:"$scriptPath\mdp.bin" > $null 2>&1
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Succès : La configuration du BIOS a ete appliquee." -ForegroundColor Green
+        Write-Host "Success : The BIOS password has been set successfully." -ForegroundColor Green
     } else {
-        Write-Host "Erreur : Un mot de passe Bios est deja defini ou la commande a echoue." -ForegroundColor Red
+        Write-Host "Error: A BIOS password is already set or the command failed." -ForegroundColor Red
     }
 }
 
@@ -61,7 +61,7 @@ $manufacturer = getManufacturer
 Write-Host "Computer Manufacturer: $manufacturer"
 
 if ($manufacturer -like "HP*") {
-    $password = Read-Host "Enter the UEFI password to set"
+    $password = Read-Host "Enter the BIOS password to set"
     setPasswordHP -password $password
 } elseif ($manufacturer -like "Dell") {
     Write-Host "Dell UEFI password setting is not yet implemented."
