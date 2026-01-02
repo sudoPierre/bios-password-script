@@ -49,7 +49,12 @@ function setPasswordHP {
         [string]$password
     )
     & "$scriptPath\HPQPswd.exe" /s /p"$password" /f"$scriptPath\mdp.bin"
-    & "$scriptPath\BiosConfigUtility.exe /npwdfile:"mdp.bin"
+    & "$scriptPath\BiosConfigUtility.exe" /npwdfile:"$scriptPath\mdp.bin" > $null 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Succès : La configuration du BIOS a ete appliquee." -ForegroundColor Green
+    } else {
+        Write-Host "Erreur : Un mot de passe Bios est deja defini ou la commande a echoue." -ForegroundColor Red
+    }
 }
 
 $manufacturer = getManufacturer
